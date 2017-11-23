@@ -79,7 +79,8 @@ function connectBroker(clientId, username, password, success, failed) {
       clientId: clientId,
       username: username,
       password: password,
-      keepalive:5
+      keepalive: 60,
+      reconnectPeriod: 1000
     });
 
   client.on('connect', function () {
@@ -88,13 +89,24 @@ function connectBroker(clientId, username, password, success, failed) {
   })
   client.on('reconnect', function() {
     console.log("reconnecting")
+    // client.end()
   })
   client.on('message', function (topic, message) {
     console.log(message.toString())
-    client.end()
   })
   client.on('close', function(){
     console.log("disconnected")
+  //   client = mqtt.connect("wxs://abj-front-wenjing1.yunba.io/mqtt",
+  //     {
+  //       port: 443,
+  //       protocolId: 'MQIsdp',
+  //       protocolVersion: 3,
+  //       clientId: clientId,
+  //       username: username,
+  //       password: password,
+  //       keepalive: 60,
+  //       reconnectPeriod: 1000
+  //     });
   })
 }
 
